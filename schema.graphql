@@ -1,0 +1,11 @@
+type VestingDayData @entity {
+  id: ID!
+  date: Int!
+  dailyClaimedVotes: BigInt!
+}
+
+type Member @entity {
+  id: ID!
+  claimedVotes: BigInt!
+  delegatee: Bytes
+}

@@ -1,0 +1,39 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Contract
+    network: mainnet
+    source:
+      address: "0xFD28bE82e453860F41c36029175377F470aF754b"
+      abi: Contract
+      startBlock: 11295973
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - ClaimTokens
+        - ClaimVotes
+        - DelegateVotes
+        - Init
+        - Transfer
+        - UnclaimedBalanceChanged
+      abis:
+        - name: Contract
+          file: ./abis/Contract.json
+      eventHandlers:
+        - event: ClaimTokens(indexed address,indexed address,uint96,uint256,uint256)
+          handler: handleClaimTokens
+        - event: ClaimVotes(indexed address,indexed address,uint96,uint96,uint96,uint96,uint96,uint96,uint96)
+          handler: handleClaimVotes
+        - event: DelegateVotes(indexed address,indexed address,indexed address,uint96)
+          handler: handleDelegateVotes
+        - event: Init(address[])
+          handler: handleInit
+        - event: Transfer(indexed address,indexed address,indexed uint32,uint96,uint96,address)
+          handler: handleTransfer
+        - event: UnclaimedBalanceChanged(indexed address,uint256,uint256)
+          handler: handleUnclaimedBalanceChanged
+      file: ./src/mapping.ts
